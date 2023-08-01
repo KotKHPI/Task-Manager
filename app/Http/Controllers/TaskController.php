@@ -13,7 +13,7 @@ class TaskController extends Controller
      */
     public function index()
     {
-        return view('index', ['tasks' => Task::all()]);
+        return view('index', ['tasks' => Task::latest()->paginate(10)]);
     }
 
     /**
@@ -32,9 +32,8 @@ class TaskController extends Controller
 
         $task = Task::create($request->validated());
 
-        $request->session()->flash('status', 'New task!');
-
-        return redirect()->route('tasks.show', ['task' => $task->id]);
+        return redirect()->route('tasks.show', ['task' => $task->id])
+            ->with('success', 'New Task!');
 
     }
 
@@ -51,7 +50,7 @@ class TaskController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        return view('edit', ['task' => Task::findOrFail($id)]);
     }
 
     /**
@@ -59,7 +58,15 @@ class TaskController extends Controller
      */
     public function update(TaskRequest $request, string $id)
     {
-        //
+        $newTask = $request->validated();
+        $oldTask = Task::findOrFail($id);
+
+//        $oldTask->fill($newTask);
+        $oldTask->update($newTask);
+//        $oldTask->save();
+
+
+        return redirect()->route('tasks.show', ['task' => $oldTask->id])->with('success', 'Task was edited!');
     }
 
     /**
@@ -67,6 +74,9 @@ class TaskController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $task = Task::findOrFail($id);
+        $task->delete();
+
+        return redirect()->route('tasks.index')->with('success', "Task '" . $task->title . "' was deleted!");
     }
 }
