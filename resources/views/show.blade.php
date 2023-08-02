@@ -22,24 +22,20 @@
         @endif
     </p>
 
-    <div>
+    <div class="flex gap-2">
         <form method="POST" action="{{ route('tasks.complete', ['task' => $task]) }}">
             @csrf
             @method('PUT')
-            <button type="submit">
+            <button class="btn btn-primary btn-block" type="submit">
                 Mark as {{ $task->completed ? 'not completed' : 'completed' }}
             </button>
         </form>
-    </div>
 
-    <div>
         <form action="{{ route('tasks.edit', ['task' => $task->id]) }}">
             @csrf
             <button class="btn btn-primary btn-block" type="submit">Edit</button>
         </form>
-    </div>
 
-    <div>
         <form action="{{ route('tasks.destroy', ['task' => $task->id]) }}" method="POST">
             @csrf
             @method('DELETE')
