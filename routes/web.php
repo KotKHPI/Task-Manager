@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\TaskController;
+use App\Http\Controllers\ToggleCompleteController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,5 +16,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('index');
+    return redirect()->route('tasks.index');
 });
+
+Route::resource('tasks', TaskController::class);
+
+Route::put('/tasks/{task}/toggle-complete', [ToggleCompleteController::class, 'switchToggleComplete'])->name('tasks.complete');
