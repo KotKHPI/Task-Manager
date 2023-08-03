@@ -12,7 +12,8 @@
     @endif
 
     <p class="mb-4 text-sm text-slate-500">Created {{ $task->created_at->diffForHumans() }} • Updated
-        {{ $task->updated_at->diffForHumans() }}</p>
+        {{ $task->updated_at->diffForHumans() }}
+    </p>
 
     <p class="mb-4">
         @if ($task->completed)
