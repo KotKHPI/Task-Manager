@@ -15,7 +15,6 @@ Also, you can add, delete and edit every task.
 #### Features that were used for the project:
 
 - Blade components
-- [Livewire](https://livewire.laravel.com)
 - Routing
 - Pagination
 - Flash messages
